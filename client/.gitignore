@@ -1,0 +1,4 @@
+.env
+MONGO_URI=your-mongodb-uri-here.env
+.env
+node_modules/

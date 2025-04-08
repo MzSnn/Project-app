@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="makeupApp">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GlamUp</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <!-- Flatpickr Calendar -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="main.css" />
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.js"></script>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <!-- App Scripts -->
+    <script src="app.js"></script>
+    <script src="controllers/mainController.js"></script>
+  </head>
+
+  <body ng-controller="MainController">
+    <h1>Book Your Makeup Appointment</h1>
+
+    <form ng-submit="bookAppointment()">
+      <input type="text" ng-model="appointment.name" placeholder="Your Name" required />
+      <input type="text" class="calendar" ng-model="appointment.date" placeholder="Select Date" required />
+
+      <div class="time-section">
+        <h3> Select a Time Slot</h3>
+        <div class="time-slots">
+          <button type="button" ng-repeat="slot in timeSlots"
+                  ng-class="{'selected': appointment.time === slot}"
+                  ng-click="appointment.time = slot">
+            {{ slot }}
+          </button>
+        </div>
+      </div>
+
+      <button type="submit">Book Appointment</button>
+    </form>
+
+    <h2>All Appointments:</h2>
+    <ul>
+      <li ng-repeat="app in appointments"
+          class="appointment-item"
+          ng-class="{'fade-out': app.fading}">
+          {{app.name}} – {{app.date}} at {{app.time}}
+      </li>
+    </ul>
+
+    <!-- Notification -->
+    <div class="toast" ng-if="showToast" ng-class="{'fade-out': fadingToast}">
+      💖 Your glam session is booked!
+    </div>
+  </body>
+</html>
